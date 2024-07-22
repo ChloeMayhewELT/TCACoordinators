@@ -34,13 +34,15 @@ public struct TCARouter<
     )
   }
 
-  public var body: some View {
-    Router(
-      ViewStore(store, observe: { $0 }).binding(get: routes, send: updateRoutes),
-      buildView: { screen, index in
-        screenContent(scopedStore(index: index, screen: screen))
+    public var body: some View {
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            Router(
+                viewStore.binding(get: routes, send: updateRoutes),
+                buildView: { screen, index in
+                    screenContent(scopedStore(index: index, screen: screen))
+                }
+            )
       }
-    )
   }
 
   public init(
