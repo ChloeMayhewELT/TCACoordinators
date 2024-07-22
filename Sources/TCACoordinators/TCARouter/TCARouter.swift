@@ -18,7 +18,6 @@ public struct TCARouter<
   let action: (ID, ScreenAction) -> CoordinatorAction
   let identifier: (Screen, Int) -> ID
 
-  @ObservedObject private var viewStore: ViewStore<CoordinatorState, CoordinatorAction>
   @ViewBuilder var screenContent: (Store<Screen, ScreenAction>) -> ScreenContent
 
   func scopedStore(index: Int, screen: Screen) -> Store<Screen, ScreenAction> {
@@ -58,7 +57,6 @@ public struct TCARouter<
     self.action = action
     self.identifier = identifier
     self.screenContent = screenContent
-    viewStore = ViewStore(store, observe: { $0 })
   }
 }
 
