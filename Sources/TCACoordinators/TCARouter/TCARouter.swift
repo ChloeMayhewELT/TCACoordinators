@@ -7,7 +7,7 @@ import SwiftUI
 public struct TCARouter<
   CoordinatorState: Equatable,
   CoordinatorAction,
-  Screen,
+  Screen: Equatable,
   ScreenAction,
   ID: Hashable,
   ScreenContent: View
@@ -58,7 +58,7 @@ public struct TCARouter<
     self.action = action
     self.identifier = identifier
     self.screenContent = screenContent
-    viewStore = ViewStore(store, observe: { $0 })
+    self.viewStore = ViewStore(store, observe: { $0 }, removeDuplicates: { routes($0) == routes($1) })
   }
 }
 
